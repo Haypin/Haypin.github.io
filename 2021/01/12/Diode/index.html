@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Serif+SC:300,300italic,400,400italic,700,700italic%7CLobster+Two:300,300italic,400,400italic,700,700italic%7CEB+Garamond:300,300italic,400,400italic,700,700italic%7CFira+Code:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","version":"8.2.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
+  </script>
+<meta name="description" content="二极管的等效模型和稳压二极管的稳压原理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Diode">
+<meta property="og:url" content="http://example.com/2021/01/12/Diode/index.html">
+<meta property="og:site_name" content="Notebook">
+<meta property="og:description" content="二极管的等效模型和稳压二极管的稳压原理">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/haypin/picture/raw/master/images/20210111162443.png">
+<meta property="og:image" content="https://gitee.com/haypin/picture/raw/master/images/20210111163131.png">
+<meta property="og:image" content="https://gitee.com/haypin/picture/raw/master/images/20210111163019.png">
+<meta property="og:image" content="https://gitee.com/haypin/picture/raw/master/images/20210111164413.png">
+<meta property="article:published_time" content="2021-01-11T20:21:20.000Z">
+<meta property="article:modified_time" content="2021-01-12T08:49:06.505Z">
+<meta property="article:author" content="Haypin Lee">
+<meta property="article:tag" content="电子电路">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/haypin/picture/raw/master/images/20210111162443.png">
+
+
+<link rel="canonical" href="http://example.com/2021/01/12/Diode/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>Diode | Notebook</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Notebook</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E7%94%B1%E4%BC%8F%E5%AE%89%E7%89%B9%E6%80%A7%E6%8A%98%E7%BA%BF%E5%8C%96%E5%BE%97%E5%88%B0%E7%9A%84%E7%AD%89%E6%95%88%E7%94%B5%E8%B7%AF"><span class="nav-text">一、由伏安特性折线化得到的等效电路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E4%BA%8C%E6%9E%81%E7%AE%A1%E7%9A%84%E5%BE%AE%E5%8F%98%E7%AD%89%E6%95%88%E7%94%B5%E8%B7%AF"><span class="nav-text">二、二极管的微变等效电路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E7%A8%B3%E5%8E%8B%E4%BA%8C%E6%9E%81%E7%AE%A1"><span class="nav-text">三、稳压二极管</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Haypin Lee"
+      src="/images/Chinese-Communist-Youth-League.jpg">
+  <p class="site-author-name" itemprop="name">Haypin Lee</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/01/12/Diode/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/Chinese-Communist-Youth-League.jpg">
+      <meta itemprop="name" content="Haypin Lee">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Notebook">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Diode
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-01-12 04:21:20 / 修改时间：16:49:06" itemprop="dateCreated datePublished" datetime="2021-01-12T04:21:20+08:00">2021-01-12</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <blockquote>
+<p>二极管的等效模型和稳压二极管的稳压原理</p>
+</blockquote>
+<a id="more"></a>
+<h3 id="一、由伏安特性折线化得到的等效电路"><a href="#一、由伏安特性折线化得到的等效电路" class="headerlink" title="一、由伏安特性折线化得到的等效电路"></a>一、由伏安特性折线化得到的等效电路</h3><img src="https://gitee.com/haypin/picture/raw/master/images/20210111162443.png" style="zoom: 67%;" />
+
+<h3 id="二、二极管的微变等效电路"><a href="#二、二极管的微变等效电路" class="headerlink" title="二、二极管的微变等效电路"></a>二、二极管的微变等效电路</h3><img src="https://gitee.com/haypin/picture/raw/master/images/20210111163131.png" style="zoom:67%;" />
+
+<blockquote>
+<p><strong>注意</strong>：这里的电流符号的区别</p>
+<p>$i_D$表示交直流混合的电流，$i_d$表示纯交流的电流，$I_D$表示$i_D$中的直流成分，$I_d$表示$i_d$的有效值</p>
+<p>$i_D=i_d+I_D$</p>
+</blockquote>
+<img src="https://gitee.com/haypin/picture/raw/master/images/20210111163019.png" style="zoom:67%;" />
+
+<h3 id="三、稳压二极管"><a href="#三、稳压二极管" class="headerlink" title="三、稳压二极管"></a>三、稳压二极管</h3><img src="https://gitee.com/haypin/picture/raw/master/images/20210111164413.png" style="zoom:67%;" />
+
+<blockquote>
+<ul>
+<li><p>稳定电压小于 4 V 的管子具有负温度系数(属于齐纳击穿),即温度升高时稳定 电压值下降;</p>
+</li>
+<li><p>稳定电压大于 7 V 的管子具有正温度系数(属于雪崩击穿),即温度 升高时稳定电压值上升;</p>
+</li>
+<li><p>而稳定电压在 4～7 V 之间的管子,温度系数非常小,近似为零(齐纳击穿和雪崩击穿均有)。 </p>
+</li>
+</ul>
+</blockquote>
+<p>因为稳压二极管工作在$I_Z$和$I_{ZM}$，所以在稳压电路中必须串联一个<strong>限流电阻</strong>来限制电流，来保证稳压管正常工作<span class="github-emoji" alias="smile" style="" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/1f604.png?v8">&#x1f604;</span></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%94%B5%E5%AD%90%E7%94%B5%E8%B7%AF/" rel="tag"># 电子电路</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/01/12/linux%E5%86%85%E6%A0%B8%E4%B8%AD%E4%B8%A4%E4%B8%AA%E9%87%8D%E8%A6%81%E7%9A%84%E5%AE%8F/" rel="next" title="linux内核中两个重要的宏">
+                  linux内核中两个重要的宏 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Haypin Lee</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  <script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'none'
+      },
+      options: {
+        renderActions: {
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              const target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    const script = document.createElement('script');
+    script.src = '//cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-mml-chtml.js';
+    script.defer = true;
+    document.head.appendChild(script);
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.typesetClear();
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+
+
+</body>
+</html>
